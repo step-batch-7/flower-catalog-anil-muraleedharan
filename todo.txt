@@ -1,0 +1,36 @@
+---------FLOWER CATALOG----------
+
+  ---REQUIREMENTS---
+
+❇️ -> A server to host our whole app
+
+❇️ -> A landing page or home page that will contain all the links to other pages
+
+❇️ -> An Abeliophyllum page with the description of the flower and download link as well as link to homepage
+
+❇️ -> An Ageratum page with same structure of Abeliophyllum
+
+❇️ -> Guest Book page with an option to put comments as well as other users comments.
+
+
+  ---TODO---
+
+🔄 -> create the directory structure properly.
+
+🔄 -> create the landing page structure without any reference to other pages.
+
+🔄 -> create a simple server to serve the landing page.
+
+🔄 -> create the Abeliophyllum page and host independently.
+
+🔄 -> create the Ageratum page and host independently.
+
+🔄 -> link these two pages to the main page and vice-versa.
+
+🔄 -> create a method to allow the user to download the pdf files.
+
+🔄 -> create the structure of the Guest book page and host independently.
+
+🔄 -> link the guest book page to the main page and vice-versa.
+
+🔄 -> create a method to save the comments and load all the previous comments.
