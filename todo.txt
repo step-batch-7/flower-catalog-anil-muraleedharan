@@ -15,9 +15,9 @@
 
   ---TODO---
 
-🔄 -> create the directory structure properly.
+✅ -> create the directory structure properly.
 
-🔄 -> create the landing page structure without any reference to other pages.
+✅ -> create the landing page structure without any reference to other pages.
 
 🔄 -> create a simple server to serve the landing page.
 
