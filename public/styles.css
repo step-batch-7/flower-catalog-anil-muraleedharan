@@ -15,7 +15,7 @@ body {
   border-bottom: solid thin;
   margin-bottom: 10px;
 }
-.heading {
+#heading-index-page {
   color: orange;
   text-align: end;
   margin-right: 100px;
