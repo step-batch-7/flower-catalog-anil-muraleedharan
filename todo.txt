@@ -19,13 +19,13 @@
 
 ✅ -> create the landing page structure without any reference to other pages.
 
-🔄 -> create a simple server to serve the landing page.
+✅ -> create a simple server to serve the landing page.
 
-🔄 -> create the Abeliophyllum page and host independently.
+✅ -> create the Abeliophyllum page and host independently.
 
-🔄 -> create the Ageratum page and host independently.
+✅ -> create the Ageratum page and host independently.
 
-🔄 -> link these two pages to the main page and vice-versa.
+✅ -> link these two pages to the main page and vice-versa.
 
 🔄 -> create a method to allow the user to download the pdf files.
 
