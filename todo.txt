@@ -27,7 +27,7 @@
 
 ✅ -> link these two pages to the main page and vice-versa.
 
-🔄 -> create a method to allow the user to download the pdf files.
+✅ -> create a method to allow the user to download the pdf files.
 
 🔄 -> create the structure of the Guest book page and host independently.
 
