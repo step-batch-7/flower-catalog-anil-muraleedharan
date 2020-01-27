@@ -29,8 +29,10 @@
 
 ✅ -> create a method to allow the user to download the pdf files.
 
-🔄 -> create the structure of the Guest book page and host independently.
+✅ -> To make the jug invisible on click.
 
-🔄 -> link the guest book page to the main page and vice-versa.
+✅ -> create the structure of the Guest book page and host independently.
+
+✅ -> link the guest book page to the main page and vice-versa.
 
 🔄 -> create a method to save the comments and load all the previous comments.
