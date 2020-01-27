@@ -12,8 +12,8 @@ const formats = {
 const STATIC_FOLDER = `${__dirname}/public`;
 const commentDatabase = `${__dirname}/data/comments.json`;
 
-const serveStaticFile = req => {
-  const path = `${STATIC_FOLDER}${req.url}`;
+const serveStaticFile = (req, path) => {
+  if (!path) path = `${STATIC_FOLDER}${req.url}`;
   const stat = fs.existsSync(path) && fs.statSync(path);
   if (!stat || !stat.isFile()) return new Response();
   const [, extension] = path.match(/.*\.(.*)$/) || [];
@@ -43,7 +43,7 @@ const commentFormatter = nameAndComment => `
     ${nameAndComment.comment.replace(/%0D%0A/g, `${formats.newline}`)}`;
 
 const serveGuestBook = req => {
-  const res = serveStaticFile(req);
+  const res = serveStaticFile(req, `${__dirname}/templates/guestBook.html`);
   let content = res.body;
   let comments = getPreviousComments();
   const formattedComments = comments.map(commentFormatter);
