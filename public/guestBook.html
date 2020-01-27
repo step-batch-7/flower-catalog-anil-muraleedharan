@@ -15,17 +15,20 @@
 
       <div id="guest-book-body">
         <h3>Leave Comment</h3>
-        <form action="guestBook.html">
+        <form method="POST">
           Name:
-          <input type="text" name="name" />
+          <input type="text" name="name" required />
           <br />
           <br />
           Comment:
-          <textarea name="comment"></textarea>
+          <textarea name="comment" required></textarea>
           <br />
           <br />
           <input type="submit" value="submit" />
         </form>
+      </div>
+      <div id="comments">
+        __comments__
       </div>
     </div>
   </body>

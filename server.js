@@ -1,6 +1,7 @@
 const { Server } = require('net');
 const Request = require('./lib/request');
 const { processRequest } = require('./app');
+const fs = require('fs');
 
 const handleConnection = function(socket) {
   const remote = `${socket.remoteAddress}:${socket.remotePort}`;
@@ -19,13 +20,20 @@ const handleConnection = function(socket) {
     res.writeTo(socket);
   });
 };
+
+const setUp = () => {
+  const dataDirPath = `${__dirname}/data`;
+  if (!fs.existsSync(dataDirPath)) fs.mkdirSync(dataDirPath);
+};
+
 const main = (port = 4000) => {
   const server = new Server();
   server.on('error', err => console.error('server error', err));
   server.on('connection', handleConnection);
-  server.on('listening', () =>
-    console.warn('started listening', server.address())
-  );
+  server.on('listening', () => {
+    console.warn('started listening', server.address());
+    setUp();
+  });
   server.listen(port);
 };
 main(process.argv[2]);
