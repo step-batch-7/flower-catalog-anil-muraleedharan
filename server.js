@@ -27,13 +27,13 @@ const setUp = () => {
 };
 
 const main = (port = 4000) => {
+  setUp();
   const server = new Server();
   server.on('error', err => console.error('server error', err));
   server.on('connection', handleConnection);
-  server.on('listening', () => {
-    console.warn('started listening', server.address());
-    setUp();
-  });
+  server.on('listening', () =>
+    console.warn('started listening', server.address())
+  );
   server.listen(port);
 };
 main(process.argv[2]);
