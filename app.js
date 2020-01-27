@@ -18,7 +18,7 @@ const serveStaticFile = (req, path) => {
   if (!stat || !stat.isFile()) return new Response();
   const [, extension] = path.match(/.*\.(.*)$/) || [];
   const contentType = CONTENT_TYPES[extension];
-  const content = fs.readFileSync(path, 'utf8');
+  const content = fs.readFileSync(path);
   const res = new Response();
   res.setHeader('Content-Type', contentType);
   res.setHeader('Content-Length', content.length);
@@ -40,12 +40,12 @@ const getPreviousComments = () =>
 const commentFormatter = nameAndComment => `
     <Strong>${formats.person}${nameAndComment.name}</Strong><br/>
     ${formats.message}
-    ${nameAndComment.comment.replace(/%0D%0A/g, `${formats.newline}`)}`;
+    ${nameAndComment.comment.replace(/\n/g, `${formats.newline}`)}`;
 
 const serveGuestBook = req => {
   const res = serveStaticFile(req, `${__dirname}/templates/guestBook.html`);
-  let content = res.body;
-  let comments = getPreviousComments();
+  let content = res.body.toString();
+  let comments = getPreviousComments().reverse();
   const formattedComments = comments.map(commentFormatter);
   const commentsLog = formattedComments.join('<br/><br/>');
   content = content.replace(/__comments__/, commentsLog);
@@ -57,9 +57,11 @@ const serveGuestBook = req => {
 const handleComment = req => {
   let comments = getPreviousComments();
   let { name, comment } = req.body;
+  name = name.replace(/\+/g, ' ');
+  comment = comment.replace(/\+/g, ' ');
   comments.push({
-    name: name.replace(/\+/g, ' '),
-    comment: comment.replace(/\+/g, ' ')
+    name,
+    comment
   });
   fs.writeFileSync(commentDatabase, JSON.stringify(comments));
   const res = serveGuestBook(req);
