@@ -61,8 +61,6 @@ const serveGuestBook = req => {
 const handleComment = req => {
   let comments = getPreviousComments();
   let { name, comment } = req.body;
-  name = name.replace(/\+/g, ' ');
-  comment = comment.replace(/\+/g, ' ');
   comments.push({
     name,
     comment
