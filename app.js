@@ -37,16 +37,20 @@ const getPreviousComments = () =>
     ? JSON.parse(fs.readFileSync('./data/comments.json', 'utf8'))
     : [];
 
-const commentFormatter = nameAndComment => `
-    <Strong>${formats.person}${nameAndComment.name}</Strong><br/>
-    ${formats.message}
-    ${nameAndComment.comment.replace(/\n/g, `${formats.newline}`)}`;
+const commentSetFormatter = ({ name, comment }) => {
+  comment = comment.replace(/\r\n/g, `${formats.newline}`);
+  comment = comment.replace(/ /g, '&ensp;');
+  return `
+  <Strong>${formats.person}${name}</Strong><br/>
+  ${formats.message}
+  ${comment}`;
+};
 
 const serveGuestBook = req => {
   const res = serveStaticFile(req, `${__dirname}/templates/guestBook.html`);
   let content = res.body.toString();
   let comments = getPreviousComments().reverse();
-  const formattedComments = comments.map(commentFormatter);
+  const formattedComments = comments.map(commentSetFormatter);
   const commentsLog = formattedComments.join('<br/><br/>');
   content = content.replace(/__comments__/, commentsLog);
   res.body = content;
