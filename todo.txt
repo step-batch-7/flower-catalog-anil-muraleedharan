@@ -35,4 +35,10 @@
 
 ✅ -> link the guest book page to the main page and vice-versa.
 
-🔄 -> create a method to save the comments and load all the previous comments.
+✅ -> create a method to save the comments and load all the previous comments.
+
+✅ -> Keep the comment log in reverse order.
+
+✅ -> Add the time and date of the comment in the comment log.
+
+✅ -> Change the net module server to http module based server
