@@ -25,7 +25,7 @@ const getPreviousComments = COMMENTS_FILE_PATH =>
 const updateComments = ({ name, comment }) => {
   let previousComments = getPreviousComments(COMMENTS_FILE_PATH);
   const timeStamp = new Date().getTime();
-  previousComments.push({ name, comment, timeStamp });
+  previousComments.unshift({ name, comment, timeStamp });
   fs.writeFileSync(COMMENTS_FILE_PATH, JSON.stringify(previousComments));
 };
 
@@ -43,7 +43,7 @@ const commentSetFormatter = function({ name, comment, timeStamp }) {
 const getGuestPage = function(url) {
   let comments = getPreviousComments(COMMENTS_FILE_PATH);
   let guestPageHtml = fs.readFileSync(`${TEMPLATES_FOLDER}/${url}`, 'utf8');
-  const formattedComments = comments.reverse().map(commentSetFormatter);
+  const formattedComments = comments.map(commentSetFormatter);
   const commentsLog = formattedComments.join('<br/><br/>');
   guestPageHtml = guestPageHtml.replace(`__comments__`, commentsLog);
   return guestPageHtml;
