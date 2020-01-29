@@ -41,4 +41,6 @@
 
 ✅ -> Add the time and date of the comment in the comment log.
 
-✅ -> Change the net module server to http module based server
+✅ -> Change the server from net module server to http module based.
+
+🔄 -> Make an app class and pull out data and functions into that.
