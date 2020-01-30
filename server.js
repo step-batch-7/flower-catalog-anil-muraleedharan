@@ -1,7 +1,7 @@
 const networkInterfaces = require('os').networkInterfaces();
 const http = require('http');
 const fs = require('fs');
-const { processRequest } = require('./app');
+const { app } = require('./handler');
 
 const setUpDataDir = function(dataDirPath) {
   if (!fs.existsSync(`${dataDirPath}`)) fs.mkdirSync(`${dataDirPath}`);
@@ -11,7 +11,7 @@ const main = function(port = 3333) {
   const dataDirPath = `${__dirname}/data`;
   setUpDataDir(dataDirPath);
   const serverIp = networkInterfaces['en0'][1].address;
-  const server = new http.Server(processRequest);
+  const server = new http.Server(app.serve.bind(app));
   server.listen(port, () =>
     console.warn(
       [
@@ -22,4 +22,5 @@ const main = function(port = 3333) {
     )
   );
 };
+
 main(process.argv[2]);
