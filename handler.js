@@ -4,15 +4,7 @@ const querystring = require('querystring');
 const STATIC_FOLDER = `${__dirname}/public`;
 const TEMPLATES_FOLDER = `${__dirname}/templates`;
 const COMMENTS_FILE_PATH = `${__dirname}/data/comments.json`;
-const CONTENT_TYPES = {
-  txt: 'text/plain',
-  html: 'text/html',
-  css: 'text/css',
-  js: 'application/javascript',
-  json: 'application/json',
-  gif: 'image/gif',
-  jpg: 'image/jpg'
-};
+const CONTENT_TYPES = require('./lib/mimeTypes');
 const spaceLength = 5;
 const formats = {
   person: '&#128100;',
@@ -65,18 +57,18 @@ const getGuestPage = function(url) {
   return guestPageHtml;
 };
 
-const serveGuestPage = function(req, res) {
-  let html = getGuestPage(req.url);
+const serveGuestPage = (req, res) => {
+  const guestPageHtml = getGuestPage(req.url);
   res.setHeader('Content-Type', CONTENT_TYPES.html);
-  if (req.method === 'GET') {
-    return res.end(html);
-  }
-  if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
-    updateComments(req.body);
-  }
-  html = getGuestPage(req.url);
+  return res.end(guestPageHtml);
+};
+
+const updateCommentAndRedirect = (req, res) => {
+  res.setHeader('Content-Type', CONTENT_TYPES.html);
+  updateComments(req.body);
+  const guestPageHtml = getGuestPage(req.url);
   res.writeHead(statusCodes.redirecting, { location: 'guestBook.html' });
-  res.end(html);
+  res.end(guestPageHtml);
 };
 
 const isPathValid = path => {
@@ -113,7 +105,7 @@ const readBody = function(req, res, next) {
 const app = new App();
 app.use(readBody);
 app.get('', serveStaticFile);
-app.post('/guestBook.html', serveGuestPage);
+app.post('/guestBook.html', updateCommentAndRedirect);
 app.get('/guestBook.html', serveGuestPage);
 app.get('', notFound);
 app.post('', notFound);
