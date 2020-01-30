@@ -44,3 +44,5 @@
 ✅ -> Change the server from net module server to http module based.
 
 ✅ -> Make an app class and pull out data and functions into that.
+
+✅ -> Add ESLint to the repository and fix all the errors.

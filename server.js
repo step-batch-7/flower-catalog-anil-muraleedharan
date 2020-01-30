@@ -1,19 +1,25 @@
 const networkInterfaces = require('os').networkInterfaces();
 const http = require('http');
-const fs = require('fs');
+const { existsSync, mkdirSync } = require('fs');
+const { stdout } = require('process');
 const { app } = require('./handler');
 
 const setUpDataDir = function(dataDirPath) {
-  if (!fs.existsSync(`${dataDirPath}`)) fs.mkdirSync(`${dataDirPath}`);
+  if (!existsSync(`${dataDirPath}`)) {
+    mkdirSync(`${dataDirPath}`);
+  }
 };
 
-const main = function(port = 3333) {
+const defaultPort = 3333;
+
+const main = function(port = defaultPort) {
   const dataDirPath = `${__dirname}/data`;
   setUpDataDir(dataDirPath);
-  const serverIp = networkInterfaces['en0'][1].address;
+  const myIpPosition = 1;
+  const serverIp = networkInterfaces['en0'][myIpPosition].address;
   const server = new http.Server(app.serve.bind(app));
   server.listen(port, () =>
-    console.warn(
+    stdout(
       [
         'Serving HTTP on',
         `${serverIp} port ${port}`,
@@ -22,5 +28,5 @@ const main = function(port = 3333) {
     )
   );
 };
-
-main(process.argv[2]);
+const portNumPosition = 2;
+main(process.argv[portNumPosition]);

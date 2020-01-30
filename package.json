@@ -1,0 +1,27 @@
+{
+  "name": "flowercatalog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  },
+  "scripts": {
+    "test": "eslint ./*.js public/js/*.js ./lib/*.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step-batch-7/flower-catalog-anil-muraleedharan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/step-batch-7/flower-catalog-anil-muraleedharan/issues"
+  },
+  "homepage": "https://github.com/step-batch-7/flower-catalog-anil-muraleedharan#readme"
+}
