@@ -19,7 +19,7 @@ const main = function(port = defaultPort) {
   const serverIp = networkInterfaces['en0'][myIpPosition].address;
   const server = new http.Server(app.serve.bind(app));
   server.listen(port, () =>
-    stdout(
+    stdout.write(
       [
         'Serving HTTP on',
         `${serverIp} port ${port}`,

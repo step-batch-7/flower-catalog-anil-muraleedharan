@@ -1,5 +1,5 @@
-const fs = require('fs');
-const { App } = require('./app');
+const { readFileSync, writeFileSync, existsSync, statSync } = require('fs');
+const { App } = require('./lib/app');
 const querystring = require('querystring');
 const STATIC_FOLDER = `${__dirname}/public`;
 const TEMPLATES_FOLDER = `${__dirname}/templates`;
@@ -33,30 +33,32 @@ const methodNotAllowed = function(req, res) {
 };
 
 const getPreviousComments = COMMENTS_FILE_PATH =>
-  fs.existsSync(COMMENTS_FILE_PATH) ? fs.readFileSync(COMMENTS_FILE_PATH) : [];
+  existsSync(COMMENTS_FILE_PATH)
+    ? JSON.parse(readFileSync(COMMENTS_FILE_PATH, 'utf8'))
+    : [];
 
 const updateComments = commentSet => {
   const { name, comment } = querystring.parse(commentSet);
   const previousComments = getPreviousComments(COMMENTS_FILE_PATH);
   const timeStamp = new Date().getTime();
   previousComments.unshift({ name, comment, timeStamp });
-  fs.writeFileSync(COMMENTS_FILE_PATH, JSON.stringify(previousComments));
+  writeFileSync(COMMENTS_FILE_PATH, JSON.stringify(previousComments));
 };
 
 const commentSetFormatter = function({ name, comment, timeStamp }) {
-  let FormattedComment = comment.replace(/\r\n/g, `${formats.newline}`);
-  const FormattedName = name.replace(/ /g, ' &nbsp');
-  FormattedComment = comment.replace(/ /g, '&nbsp;');
+  let formattedComment = comment.replace(/\r\n/g, `${formats.newline}`);
+  const formattedName = name.replace(/ /g, ' &nbsp');
+  formattedComment = formattedComment.replace(/ /g, '&nbsp;');
   const date = new Date(timeStamp).toUTCString();
   return `
-  <Strong>${formats.person}${FormattedName}</Strong> @ ${date}<br/>
+  <Strong>${formats.person}${formattedName}</Strong> @ ${date}<br/>
   ${formats.message}
-  ${FormattedComment}`;
+  ${formattedComment}`;
 };
 
 const getGuestPage = function(url) {
   const comments = getPreviousComments(COMMENTS_FILE_PATH);
-  let guestPageHtml = fs.readFileSync(`${TEMPLATES_FOLDER}/${url}`, 'utf8');
+  let guestPageHtml = readFileSync(`${TEMPLATES_FOLDER}/${url}`, 'utf8');
   const formattedComments = comments.map(commentSetFormatter);
   const commentsLog = formattedComments.join('<br/><br/>');
   guestPageHtml = guestPageHtml.replace('__comments__', commentsLog);
@@ -78,7 +80,7 @@ const serveGuestPage = function(req, res) {
 };
 
 const isPathValid = path => {
-  const stat = fs.existsSync(path) && fs.statSync(path);
+  const stat = existsSync(path) && statSync(path);
   return !stat || !stat.isFile();
 };
 
@@ -94,7 +96,7 @@ const serveStaticFile = (req, res, next) => {
   }
   const [, extension] = path.match(/.*\.(.*)$/) || [];
   res.setHeader('Content-Type', CONTENT_TYPES[extension]);
-  res.end(fs.readFileSync(path));
+  res.end(readFileSync(path));
 };
 
 const readBody = function(req, res, next) {
