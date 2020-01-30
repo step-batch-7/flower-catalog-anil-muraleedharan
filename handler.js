@@ -1,17 +1,17 @@
 const { readFileSync, writeFileSync, existsSync, statSync } = require('fs');
 const { App } = require('./lib/app');
 const querystring = require('querystring');
+const CONTENT_TYPES = require('./lib/mimeTypes');
+
 const STATIC_FOLDER = `${__dirname}/public`;
 const TEMPLATES_FOLDER = `${__dirname}/templates`;
 const COMMENTS_FILE_PATH = `${__dirname}/data/comments.json`;
-const CONTENT_TYPES = require('./lib/mimeTypes');
 const spaceLength = 5;
 const formats = {
   person: '&#128100;',
   message: '&#128233;',
   newline: `<br>${'&ThickSpace;'.repeat(spaceLength)}&ThinSpace;`
 };
-
 const statusCodes = { badRequest: 400, notFound: 404, redirecting: 303 };
 
 const notFound = function(req, res) {
