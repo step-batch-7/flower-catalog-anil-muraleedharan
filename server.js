@@ -2,7 +2,7 @@ const networkInterfaces = require('os').networkInterfaces();
 const http = require('http');
 const { existsSync, mkdirSync } = require('fs');
 const { stdout } = require('process');
-const { app } = require('./handler');
+const { app } = require('./lib/handler');
 
 const setUpDataDir = function(dataDirPath) {
   if (!existsSync(`${dataDirPath}`)) {
