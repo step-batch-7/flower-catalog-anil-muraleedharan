@@ -79,13 +79,14 @@
   },
   "overrides": [
     {
-      "files": ["test*.js", "./public/js/script.js"],
+      "files": ["test*.js", "./public/js/script.js", "./config.js"],
       "rules": {
         "no-unused-vars": "off",
         "no-undef": "off",
         "max-len": "warn",
         "no-magic-numbers": "off",
-        "max-statements": "off"
+        "max-statements": "off",
+        "no-process-env": "off"
       }
     }
   ]

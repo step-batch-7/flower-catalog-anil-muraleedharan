@@ -1,14 +1,11 @@
 const networkInterfaces = require('os').networkInterfaces();
 const http = require('http');
-const setUpDataDir = require('./lib/setUp');
 const { stdout } = require('process');
 const { app } = require('./lib/handler');
 
 const defaultPort = 3333;
 
 const main = function(port = defaultPort) {
-  const dataDirPath = `${__dirname}/data`;
-  setUpDataDir(dataDirPath);
   const myIpPosition = 1;
   const serverIp = networkInterfaces['en0'][myIpPosition].address;
   const server = new http.Server(app.serve.bind(app));

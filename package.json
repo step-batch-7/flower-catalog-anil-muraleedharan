@@ -14,8 +14,8 @@
     "nyc": "^15.0.0"
   },
   "scripts": {
-    "test": "eslint ./*.js public/js/*.js ./lib/*.js",
-    "start": "node server.js"
+    "test": "mkdir -p test/resource;nyc mocha; eslint ./*.js public/js/*.js ./lib/*.js;rm -rf test/resource",
+    "start": "mkdir -p dataStore;export DATA_STORE=$(pwd)/dataStore/comments.json;node server.js"
   },
   "repository": {
     "type": "git",
