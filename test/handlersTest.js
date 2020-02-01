@@ -67,3 +67,14 @@ describe('PUT /bad.html - bad request', function() {
       .expect(statusCodes.badRequest, done);
   });
 });
+
+describe('POST /guestBool.html - POST request', function() {
+  it('should return guest Book with code 303', function(done) {
+    request(app.serve.bind(app))
+      .post('/guestBook.html')
+      .send('name=anil&comment=hi')
+      .set('Accept', '*/*')
+      .expect('Content-Type', 'text/html')
+      .expect(statusCodes.redirection, done);
+  });
+});
